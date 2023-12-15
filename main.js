@@ -11,35 +11,28 @@ window.onload = function() {
 
     //generate//
     
-    for (let y = -1; y < size; y++){
-        for (let x = -1; x < size; x++){
-            let r,g,b = 0
-            let a = 255
+    for (let y = 0; y < size; y++){
+        for (let x = -0; x < size; x++){
+            let r,g,b = 0;
             
             if (y > 0 && x > 0){
 
                 switch ((x%2 + y%2)) {
                     case 2:
-                        [r,g,b,a] = get_pixel(imageData.data, x, y-2);
-                        r += Math.floor(Math.random()*10);
+                        r = Math.floor((y/64)*255);
                         break;
                     case 0:
-                        [r,g,b,a] = get_pixel(imageData.data, x-2, y);
-                        g += Math.floor(Math.random()*10);
+                        g = Math.floor((x/64)*255);
                         break;
                     default:
-                        [r,g,b,a] = get_pixel(imageData.data, x-1, y-1)
-                        b += Math.floor(Math.random()*7)
+                        b = 180 - Math.floor((x+y)/128*255);
                 }
 
             set_pixel(imageData,x,y,r,g,b)
             }  
         }   
     }
-    
-
     paint_canvas(imageData, ctx);
-    
 }
 
 
@@ -71,6 +64,7 @@ function set_pixel(imgData,x,y,R,G,B){
     imgData.data [(y *64 + x) *4 +2] = B;
     imgData.data [(y *64 + x) *4 +3] = 255;
 }
+
 
 function paint_it_black(imgData, size){
     for (let x = 0; x < size; x++){
